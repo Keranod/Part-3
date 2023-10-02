@@ -66,3 +66,36 @@ app.delete("/api/persons/:id", (request, response) => {
 
   response.status(204).end();
 });
+
+const generateID = () => {
+  min = Math.ceil(5);
+  max = Math.floor(2 ^ 10);
+
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
+app.post("/api/persons", (request, response) => {
+  const body = request.body;
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: "name missing",
+    });
+  }
+
+  if (!body.number) {
+    return response.status(400).json({
+      error: "number missing",
+    });
+  }
+
+  const person = {
+    id: generateID(),
+    name: body.name,
+    number: body.number,
+  };
+
+  persons = persons.concat(person);
+
+  response.json(person);
+});
