@@ -5,7 +5,24 @@ const app = express();
 const morgan = require("morgan");
 
 app.use(express.json());
-app.use(morgan(`tiny`));
+
+//custom token which has its own name, which can be used when initalizing morgan format
+morgan.token(`post-data`, (req, res) => {
+  //if request is POST
+  if (req.method === `POST`) {
+    //converts json data format to javascript object
+    return JSON.stringify(req.body);
+  } else {
+    return ``;
+  }
+});
+
+app.use(
+  morgan(
+    //tokens to use; :<TOKEN> is replaced by token return value
+    `:method :url :status :res[content-length] - :response-time ms :post-data`
+  )
+);
 
 let persons = [
   {
