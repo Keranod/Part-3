@@ -5,6 +5,7 @@ const app = express();
 const morgan = require("morgan");
 
 app.use(express.json());
+app.use(express.static("dist"));
 
 //custom token which has its own name, which can be used when initalizing morgan format
 morgan.token(`post-data`, (req, res) => {
@@ -47,7 +48,7 @@ let persons = [
   },
 ];
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
