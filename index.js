@@ -63,8 +63,7 @@ app.get("/info", (request, response) => {
 
   response.send(
     `<p>Phonebook has info for ${amountOfPersons} people</p>
-    <p>${requestTime}</p>
-    <p>Yoo its working</p>`
+    <p>${requestTime}</p>`
   );
 });
 
