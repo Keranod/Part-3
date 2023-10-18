@@ -69,45 +69,19 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end();
 });
 
-const generateID = () => {
-  min = Math.ceil(5);
-  max = Math.floor(2 ^ 10);
-
-  return Math.floor(Math.random() * (max - min) + min);
-};
-
 app.post("/api/persons", (request, response) => {
   const body = request.body;
 
-  if (!body.name) {
-    return response.status(400).json({
-      error: "name missing",
-    });
+  if (body.content === undefined) {
+    return response.status(400).json({ error: "content missing" });
   }
 
-  if (!body.number) {
-    return response.status(400).json({
-      error: "number missing",
-    });
-  }
-
-  const personExists = persons.find((person) => {
-    return person.name === body.name;
-  });
-
-  if (personExists) {
-    return response.status(400).json({
-      error: "name must be unique",
-    });
-  }
-
-  const person = {
-    id: generateID(),
+  const person = new Person({
     name: body.name,
     number: body.number,
-  };
+  });
 
-  persons = persons.concat(person);
-
-  response.json(person);
+  person.save().then((savedPerson) => {
+    response.json(savedPerson);
+  });
 });
