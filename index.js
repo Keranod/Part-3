@@ -107,7 +107,7 @@ app.put("api/persons/:id", (request, response, next) => {
 
   Person.findByIdAndUpdate(request.params.id, person, { number: body.number })
     .then((updatePerson) => {
-      respone.json(updatePerson);
+      response.json(updatePerson);
     })
     .catch((error) => next(error));
 });
