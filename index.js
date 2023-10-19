@@ -96,3 +96,18 @@ app.post("/api/persons", (request, response) => {
     response.json(savedPerson);
   });
 });
+
+app.put("api/persons/:id", (request, response, next) => {
+  const body = request.body;
+
+  const person = {
+    name: body.name,
+    number: body.number,
+  };
+
+  Person.findByIdAndUpdate(request.params.id, person, { number: body.number })
+    .then((updatePerson) => {
+      respone.json(updatePerson);
+    })
+    .catch((error) => next(error));
+});
