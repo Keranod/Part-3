@@ -51,7 +51,7 @@ app.get("/api/persons", (request, response) => {
 });
 
 app.get("/info", (request, response) => {
-  const amountOfPersons = Person.length;
+  const amountOfPersons = Person.countDocuments();
   const requestTime = new Date().toString();
 
   response.send(
