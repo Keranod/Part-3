@@ -8,7 +8,6 @@ const morgan = require("morgan");
 
 app.use(express.static("dist"));
 app.use(express.json());
-app.use(cors());
 
 //custom token which has its own name, which can be used when initalizing morgan format
 morgan.token(`post-data`, (req, res) => {
