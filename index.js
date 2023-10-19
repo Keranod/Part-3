@@ -94,18 +94,17 @@ app.delete("/api/persons/:id", (request, response, next) => {
 app.post("/api/persons", (request, response) => {
   const body = request.body;
 
-  if (body.name === undefined) {
-    return response.status(400).json({ error: "name missing" });
-  }
-
   const person = new Person({
     name: body.name,
     number: body.number,
   });
 
-  person.save().then((savedPerson) => {
-    response.json(savedPerson);
-  });
+  person
+    .save()
+    .then((savedPerson) => {
+      response.json(savedPerson);
+    })
+    .catch((error) => next(error));
 });
 
 app.put("/api/persons/:id", (request, response, next) => {
