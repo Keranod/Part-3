@@ -51,13 +51,22 @@ app.get("/api/persons", (request, response) => {
 });
 
 app.get("/info", (request, response) => {
-  const amountOfPersons = Person.countDocuments({});
   const requestTime = new Date().toString();
 
-  response.send(
-    `<p>Phonebook has info for ${amountOfPersons} people</p>
-    <p>${requestTime}</p>`
-  );
+  Person.countDocuments({}).then((count) => {
+    response.send(
+      `<p>Phonebook has info for ${count} people</p>
+       <p>${requestTime}</p>`
+    );
+  });
+
+  // const amountOfPersons = Person.countDocuments({});
+  // const requestTime = new Date().toString();
+
+  // response.send(
+  //   `<p>Phonebook has info for ${amountOfPersons} people</p>
+  //   <p>${requestTime}</p>`
+  // );
 });
 
 app.get("/api/persons/:id", (request, response, next) => {
